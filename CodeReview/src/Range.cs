@@ -1,20 +1,23 @@
-﻿namespace MyLibrary;
+﻿using System;
 
-public class Range : IRange
+namespace MyLibrary
 {
-    public int Lower { get; private set; }
-    public int Upper { get; private set; }
-
-    public Range(int lower, int upper)
+    public class Range : IRange
     {
-        if (lower <= upper)
+        public int lower { get; private set; }
+        public int upper { get; private set; }
+
+        public Range(int lower, int upper)
         {
-            Lower = lower;
-            Upper = upper;
-        }
-        else
-        {
-            throw new ArgumentException("The lower value should be less than the upper value.");
+            if (lower <= upper)
+            {
+                this.lower = lower;
+                this.upper = upper;
+            }
+            else
+            {
+                throw new ArgumentException("The lower value should be less than the upper value.");
+            }
         }
     }
 }

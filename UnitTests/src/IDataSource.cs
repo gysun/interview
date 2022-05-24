@@ -1,13 +1,16 @@
-﻿namespace MyLibrary;
+﻿using System.Collections.Generic;
 
-/// <summary>
-/// Represents the data source.
-/// </summary>
-public interface IDataSource
+namespace MyLibrary
 {
     /// <summary>
-    /// Gets a series of numbers.
+    /// Represents the data source.
     /// </summary>
-    /// <returns>A list of int.</returns>
-    IEnumerable<int> GetNumbers();
+    public interface IDataSource
+    {
+        /// <summary>
+        /// Gets a series of numbers.
+        /// </summary>
+        /// <returns>A list of int.</returns>
+        IEnumerable<int> GetNumbers();
+    }
 }

@@ -1,12 +1,13 @@
-﻿namespace MyLibrary;
-
-public interface INumbersGenerator
+﻿namespace MyLibrary
 {
-    string GenerateOutput();
-}
+    public interface INumbersGenerator
+    {
+        string GenerateOutput();
+    }
 
-public interface IRange
-{
-    int Lower { get; }
-    int Upper { get; }
+    public interface IRange
+    {
+        int lower { get; }
+        int upper { get; }
+    }
 }
