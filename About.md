@@ -5,6 +5,7 @@
 - GenerateOutput => string.Join(", ", Enumerable.Range(_lower, _upper - _lower + 1));
 - Comments to public methods
 - Extensions => IntegerExtensions
+- Extensions.IsEven is not used
 - IRange.lower/upper => Lower/Upper
 - Not used namespace in OddNumbersGenerator
 - OddNumbersGenerator.Range => use Constructor to init.
