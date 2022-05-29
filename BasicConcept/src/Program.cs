@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 
 namespace BasicConcept
 {
@@ -13,122 +14,100 @@ namespace BasicConcept
         /// </summary>
         /// <param name="args">The args.</param>
         /// <returns>An int.</returns>
-        private static int Main(string[] args) => args[0] switch
+        private static void Main(string[] args) 
         {
-            "1" => Question1(),
-            "2" => Question2(),
-            "3" => Question3(),
-            "4" => Question4(),
-            "5" => Question5(),
-            "6" => Question6(),
-            "7" => Question7(),
-            "8" => Question8(),
-            "9" => Question9(),
-            "10" => Question10(),
-            "11" => Question11(),
-            "12" => Question12(),
-            "13" => Question13(),
-            "14" => Question14(),
-            "15" => Question15(),
-            "16" => Question16(),
-            "17" => Question17(),
-            "18" => Question18(),
-            "19" => Question19(),
-            "20" => Question20(),
-            _ => throw new NotImplementedException(),
-        };
+            while (true)
+            {
+                var seq = Console.ReadLine();
+
+                if (int.TryParse(seq, out var _))
+                {
+                    try
+                    {
+                        typeof(Program).GetMethod($"Question{seq}", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null);
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
 
         /// <summary>
         /// Question1.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question1()
+        private static void Question1()
         {
-            Console.WriteLine(Math.Round(6.5));
-            Console.WriteLine(Math.Round(11.5));
-            
-            return 1;
+            Console.WriteLine(Math.Round(7.5));
+            Console.WriteLine(Math.Round(22.5));
         }
 
         /// <summary>
         /// Question2.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question2()
+        private static void Question2()
         {
             var i = new int[0];
             Console.WriteLine(i[0]);
-
-            return 2;
         }
 
         /// <summary>
         /// Question3.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question3()
+        private static void Question3()
         {
             byte num = 100;
             dynamic val = num;
             Console.WriteLine(val.GetType());
             val += 100;
             Console.WriteLine(val.GetType());
-            
-            return 3;
         }
 
         /// <summary>
         /// Question4.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question4()
+        private static void Question4()
         {
             string str1 = "TechBeamers";
             string str2 = "TECHBEAMERS";
 
             var compareToResult = str1.CompareTo(str2);
             Console.WriteLine(compareToResult);
-            
-            return 4;
         }
 
         /// <summary>
         /// Question5.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question5()
+        private static void Question5()
         {
             char x = 'A';
             int i = 0;
             Console.WriteLine (true  ? x : 0);
-            Console.WriteLine(false ? i : x); 
-            
-            return 5;
+            Console.WriteLine(false ? i : x);
         }
 
         /// <summary>
         /// Question6.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question6()
+        private static void Question6()
         {
             char[] num = { '1', '2', '3' };
             Console.WriteLine(" char array: " + num);
-          
-            return 6;
         }
 
         #region Question7
         /// <summary>
         /// Question7.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question7()
+        private static void Question7()
         {
             Program obj = null;
             Console.WriteLine(Program.SaySomething());
-            
-            return 7;
         }
         /// <summary>
         /// Say something.
@@ -143,8 +122,7 @@ namespace BasicConcept
         /// <summary>
         /// Question8.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question8()
+        private static void Question8()
         {
             string[] strings = { "abc", "def", "ghi" };
 
@@ -153,8 +131,6 @@ namespace BasicConcept
                 Console.WriteLine(@string);
                 return @string;
             });
-
-            return 8;
         }
 
         #region Question9
@@ -169,24 +145,21 @@ namespace BasicConcept
         /// C) Welcome*friends*to*TechBeamers
         /// D) Welcome friends to TechBeamers
         /// </remarks>
-        private static int Question9()
+        private static void Question9()
         {
-            StringDelegate str1 = new (Sample.DelegateSample);
+            StringDelegate str1 = new (Q9.DelegateSample);
             var str = str1("Welcome,,friends,,to,,TechBeamers");
             Console.WriteLine(str);
-
-            return 9;
         } 
 
         delegate string StringDelegate(string @string);
 
-        private class Sample
+        private class Q9
         {
             /// <summary>
             /// Delegate sample.
             /// </summary>
             /// <param name="a">The a.</param>
-            /// <returns>A string.</returns>
             public static string DelegateSample(string a)
             {
                 return a.Replace(',', '*');
@@ -198,16 +171,13 @@ namespace BasicConcept
         /// <summary>
         /// Question10.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question10()
+        private static void Question10()
         {
             ClassA objectOfClassB = new ClassB();
             Console.WriteLine(objectOfClassB.Print());
 
             ClassA objectOfClassC = new ClassC();
             Console.WriteLine(objectOfClassC.Print());
-
-            return 10;
         }
  
         private class ClassA
@@ -215,7 +185,6 @@ namespace BasicConcept
             /// <summary>
             /// Print.
             /// </summary>
-            /// <returns>A string.</returns>
             public virtual string Print()
             {
                 return nameof(ClassA);
@@ -227,7 +196,6 @@ namespace BasicConcept
             /// <summary>
             /// Print.
             /// </summary>
-            /// <returns>A string.</returns>
             public override string Print()
             {
                 return nameof(ClassB);
@@ -239,7 +207,6 @@ namespace BasicConcept
             /// <summary>
             /// Print.
             /// </summary>
-            /// <returns>A string.</returns>
             public new string Print()
             {
                 return nameof(ClassC);
@@ -254,13 +221,12 @@ namespace BasicConcept
         /// </summary>
         /// <remarks>
         /// A) Unhandled exception. System.NotSupportedException: Specified method is not supported.
-        ///     at BasicConcept.Program.Question11() in D:\Documents\NLTD\CGI\Team\Interview\RemoteInterview\BasicConcept\src\Program.cs:line 267 
+        ///     at BasicConcept.Program.Question11() in D:\Documents\NLTD\CGI\Team\Interview\RemoteInterview\BasicConcept\src\Program.cs:line 233
         /// B) Unhandled exception. System.NotSupportedException: Specified method is not supported.
-        ///     at BasicConcept.Program.Question11() in D:\Documents\NLTD\CGI\Team\Interview\RemoteInterview\BasicConcept\src\Program.cs:line 271
+        ///     at BasicConcept.Program.Question11() in D:\Documents\NLTD\CGI\Team\Interview\RemoteInterview\BasicConcept\src\Program.cs:line 237
         /// C) End.
         /// </remarks>
-        /// <returns>An int</returns>
-        private static int Question11()
+        private static void Question11()
         {
             try
             {
@@ -280,13 +246,12 @@ namespace BasicConcept
         /// </summary>
         /// <remarks>
         /// A) Unhandled exception. System.NotSupportedException: Specified method is not supported.
-        ///     at BasicConcept.Program.Question11() in D:\Documents\NLTD\CGI\Team\Interview\RemoteInterview\BasicConcept\src\Program.cs:line 293 
+        ///     at BasicConcept.Program.Question11() in D:\Documents\NLTD\CGI\Team\Interview\RemoteInterview\BasicConcept\src\Program.cs:line 258
         /// B) Unhandled exception. System.NotSupportedException: Specified method is not supported.
-        ///     at BasicConcept.Program.Question11() in D:\Documents\NLTD\CGI\Team\Interview\RemoteInterview\BasicConcept\src\Program.cs:line 297
+        ///     at BasicConcept.Program.Question11() in D:\Documents\NLTD\CGI\Team\Interview\RemoteInterview\BasicConcept\src\Program.cs:line 262
         /// C) End.
         /// </remarks>
-        /// <returns>An int</returns>
-        private static int Question12()
+        private static void Question12()
         {
             try
             {
@@ -302,8 +267,7 @@ namespace BasicConcept
         /// <summary>
         /// Question13.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question13()
+        private static void Question13()
         {
             try
             {
@@ -321,8 +285,6 @@ namespace BasicConcept
             }
 
             Console.WriteLine("Q13 Done");
-
-            return 13;
         }
 
         #endregion
@@ -331,8 +293,7 @@ namespace BasicConcept
         /// <summary>
         /// Question14.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question14()
+        private static void Question14()
         {
             var i = 3;
             var j = 2;
@@ -351,23 +312,18 @@ namespace BasicConcept
             Double(ref i);
             Square(out j);
             Console.WriteLine(i + ", " + j);
-
-            return 14;
         }
         #endregion
 
         /// <summary>
         /// Question15.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question15()
+        private static void Question15()
         {
             var a = "This is a \"string\"";
             var b = @"This is a ""string""";
 
             Console.WriteLine(a == b ? "Equal" : "NotEqual");
-
-            return 15;
         }
 
 
@@ -379,22 +335,18 @@ namespace BasicConcept
         /// B) 0a1a2a3a4a
         /// C) 979899100101
         /// </remarks>
-        /// <returns>An int.</returns>
-        private static int Question16()
+        private static void Question16()
         {
             for (int x = 0; x < 5; x++)
             {
                 Console.Write(x + 'a');
             }
-
-            return 16;
         }
 
         /// <summary>
         /// Question17.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question17()
+        private static void Question17()
         {
             float dividend = 56, divisor = 0;
  
@@ -406,8 +358,6 @@ namespace BasicConcept
             {
                 Console.WriteLine("Divide by zero");
             }
-
-            return 17;
         }
 
         #region Question18
@@ -418,13 +368,10 @@ namespace BasicConcept
         /// <summary>
         /// Question18.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question18()
+        private static void Question18()
         {
             Console.WriteLine((int)Color.Green + ", ");
             Console.WriteLine((int)Color.Yellow);
-
-            return 18;
         }
         #endregion
 
@@ -432,14 +379,11 @@ namespace BasicConcept
         /// <summary>
         /// Question19.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question19()
+        private static void Question19()
         {
             Child child = new Child();
             int i = 10;
             child.Say(i);
-
-            return 19;
         } 
 
         private class Parent
@@ -462,17 +406,86 @@ namespace BasicConcept
         }
         #endregion
 
-        #region Question20
-        public static int Q20 = 0;
         /// <summary>
         /// Question20.
         /// </summary>
-        /// <returns>An int.</returns>
-        private static int Question20()
+        private static void Question20()
         {
-            (Q20++).TestQ20();
+            int[] arr = { 1, 2, 3 };
+            int i = 1;
+            arr[i++] = arr[i] + 20;
+            Console.WriteLine(string.Join(",", arr));
+        }
 
-            return 20;
+        #region Question21
+        private class Q21
+        {
+            public readonly static Program Current = new Program();
+            public Program Instance { get => Current; }
+        }
+
+        /// <summary>
+        /// Question21.
+        /// </summary>
+        private static void Question21()
+        {
+            var a = new Q21();
+            var b = new Q21();
+
+            Console.WriteLine(a == b);
+            Console.WriteLine(a.Instance == b.Instance);
+        }
+        #endregion
+
+        #region Question22
+        /// <summary>
+        /// Question22.
+        /// </summary>
+        private static void Question22()
+        {
+            Q22 s = new();
+            s.Print();
+
+            IQ22 i = s;
+            i.Print();
+        }
+
+        private interface IQ22
+        {
+            void Print(string value = "Interface value");
+        }
+
+        private class Q22 : IQ22
+        {
+            public void Print(string value = "Class value")
+            {
+                Console.WriteLine(value);
+            }
+        }
+        #endregion
+
+        private static void Question23()
+        {
+            int[] singleDimensionArray = { 1, 2, 3, 4, 5, 6 };
+            int[,] multileDimensionArray = { { 1, 2, 3 }, { 4, 5, 6 } };
+            int[][] jaggedArray = { new int[] { 1, 2, 3 }, new int[] { 4, 5, 6 } };
+
+            Console.WriteLine(singleDimensionArray.Length);
+            Console.WriteLine(singleDimensionArray.Rank);
+            Console.WriteLine(multileDimensionArray.Length);
+            Console.WriteLine(multileDimensionArray.Rank);
+            Console.WriteLine(jaggedArray.Length);
+            Console.WriteLine(jaggedArray.Rank);
+        }
+
+        #region Question25
+        public static int Q25 = 0;
+        /// <summary>
+        /// Question25.
+        /// </summary>
+        private static void Question25()
+        {
+            (Q25++).TestQ25();
         }
         #endregion
 
@@ -481,12 +494,12 @@ namespace BasicConcept
     internal static class IntExtensions
     {
         /// <summary>
-        /// Test q20.
+        /// Test Q25.
         /// </summary>
         /// <param name="int">The int.</param>
-        public static void TestQ20(this int @int)
+        public static void TestQ25(this int @int)
         {
-            Console.WriteLine(Program.Q20);
+            Console.WriteLine(Program.Q25);
             Console.WriteLine(@int);
         }
     }
